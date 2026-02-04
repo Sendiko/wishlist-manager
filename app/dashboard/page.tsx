@@ -8,6 +8,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import DeleteButton from './delete-button'
 import ItemsListClient from './items-list-client'
+import ThemeToggle from '@/app/components/theme-toggle'
 
 export default async function DashboardPage() {
     const session = await getSession()
@@ -96,6 +97,22 @@ export default async function DashboardPage() {
 
     return (
         <div className="max-w-7xl mx-auto space-y-10 pb-20">
+            {/* Header */}
+            <header className="flex justify-between items-center pt-8 px-4">
+                <h1 className="text-3xl sm:text-4xl font-bold text-on-background font-display">✨ Dashboard</h1>
+                <div className="flex items-center gap-3">
+                    <ThemeToggle />
+                    <form action={logout}>
+                        <button
+                            type="submit"
+                            className="px-4 py-2 bg-error text-on-error rounded-md hover:bg-error/90 transition-colors text-sm font-medium"
+                        >
+                            Logout
+                        </button>
+                    </form>
+                </div>
+            </header>
+
             {/* Section 1: Top Most Wanted */}
             <section>
                 <h2 className="text-2xl font-bold text-on-surface mb-4 font-display">🔥 Top Most Wanted</h2>
