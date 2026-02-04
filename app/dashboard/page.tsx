@@ -89,14 +89,14 @@ export default async function DashboardPage() {
     }
 
     return (
-        <div className="flex flex-col min-h-screen bg-gray-100">
+        <div className="flex flex-col min-h-screen bg-background">
             {/* Top App Bar */}
-            <header className="bg-white shadow-sm sticky top-0 z-10">
+            <header className="bg-surface shadow-sm sticky top-0 z-10 border-b border-outline-variant">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16 items-center">
                         {/* Title */}
                         <div className="flex-shrink-0 flex items-center">
-                            <Link href="/dashboard" className="text-xl font-bold text-gray-900 tracking-tight hover:text-blue-600 transition">
+                            <Link href="/dashboard" className="text-xl font-bold text-on-surface tracking-tight hover:text-primary transition">
                                 ulala
                             </Link>
                         </div>
@@ -105,20 +105,20 @@ export default async function DashboardPage() {
                         <div className="flex items-center space-x-4">
                             <Link
                                 href="/dashboard/compare-categories"
-                                className="text-sm font-medium text-purple-600 hover:bg-purple-50 px-3 py-2 rounded-md transition-colors"
+                                className="text-sm font-medium text-primary hover:bg-primary-container/10 px-3 py-2 rounded-md transition-colors"
                             >
                                 📊 Kategori
                             </Link>
                             <Link
                                 href="/dashboard/compare"
-                                className="text-sm font-medium text-blue-600 hover:bg-blue-50 px-3 py-2 rounded-md transition-colors"
+                                className="text-sm font-medium text-secondary hover:bg-secondary-container/10 px-3 py-2 rounded-md transition-colors"
                             >
                                 ⚖️ Bandingkan
                             </Link>
                             <form action={logout}>
                                 <button
                                     type="submit"
-                                    className="text-sm font-medium text-gray-600 hover:text-red-600 transition duration-150 ease-in-out px-3 py-2 rounded-md"
+                                    className="text-sm font-medium text-on-surface-variant hover:text-error transition duration-150 ease-in-out px-3 py-2 rounded-md"
                                 >
                                     Sign Out
                                 </button>
@@ -134,16 +134,16 @@ export default async function DashboardPage() {
 
                     {/* Section 1: Top Most Wanted */}
                     <section>
-                        <h2 className="text-2xl font-bold text-gray-800 mb-4">🔥 Top Most Wanted</h2>
+                        <h2 className="text-2xl font-bold text-on-surface mb-4">🔥 Top Most Wanted</h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {topItems.length > 0 ? (
                                 topItems.map((item) => (
-                                    <div key={item.id} className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col hover:shadow-xl transition-shadow duration-300 relative border border-orange-100">
+                                    <div key={item.id} className="bg-surface-container rounded-xl shadow-lg overflow-hidden flex flex-col hover:shadow-xl transition-shadow duration-300 relative border border-tertiary-container">
                                         <div className="absolute top-2 right-2 flex flex-col items-end space-y-1 z-10">
-                                            <span className="bg-orange-500/90 text-white text-xs font-bold px-2 py-1 rounded-full shadow-sm">
+                                            <span className="bg-tertiary text-on-tertiary text-xs font-bold px-2 py-1 rounded-full shadow-sm">
                                                 ★ Wish: {item.wish_rate}
                                             </span>
-                                            <span className="bg-blue-500/90 text-white text-xs font-bold px-2 py-1 rounded-full shadow-sm">
+                                            <span className="bg-secondary text-on-secondary text-xs font-bold px-2 py-1 rounded-full shadow-sm">
                                                 ★ Interest: {item.interest_rate}
                                             </span>
                                         </div>
@@ -156,7 +156,7 @@ export default async function DashboardPage() {
                                                     className="object-cover"
                                                 />
                                             ) : (
-                                                <div className="flex items-center justify-center h-full text-gray-400">
+                                                <div className="flex items-center justify-center h-full text-on-surface-variant/50">
                                                     No Image
                                                 </div>
                                             )}
@@ -169,9 +169,9 @@ export default async function DashboardPage() {
                                             )}
                                         </div>
                                         <div className="p-4 flex-grow flex flex-col">
-                                            <h3 className="text-lg font-bold text-gray-900 mb-1">{item.name}</h3>
-                                            <p className="text-orange-600 font-semibold mb-2">{formatCurrency(item.price)}</p>
-                                            <p className="text-gray-500 text-sm line-clamp-2 flex-grow">{item.reasoning}</p>
+                                            <h3 className="text-lg font-bold text-on-surface mb-1">{item.name}</h3>
+                                            <p className="text-tertiary font-semibold mb-2">{formatCurrency(item.price)}</p>
+                                            <p className="text-on-surface-variant text-sm line-clamp-2 flex-grow">{item.reasoning}</p>
 
                                             <div className="mt-4 flex flex-wrap gap-2 items-center justify-between">
                                                 {/* Purchase Toggle Form */}
@@ -191,7 +191,7 @@ export default async function DashboardPage() {
                                                 </form>
 
                                                 <div className="flex gap-2">
-                                                    <Link href={`/dashboard/edit/${item.id}`} className="p-2 text-gray-600 hover:bg-gray-100 rounded-md border border-gray-200" title="Edit">
+                                                    <Link href={`/dashboard/edit/${item.id}`} className="p-2 text-primary hover:bg-primary/10 rounded-md border border-outline-variant" title="Edit">
                                                         ✏️
                                                     </Link>
                                                     {item.link && (
@@ -205,8 +205,8 @@ export default async function DashboardPage() {
                                     </div>
                                 ))
                             ) : (
-                                <div className="col-span-3 text-center py-10 bg-white rounded-xl border border-dashed border-gray-300">
-                                    <p className="text-gray-500">Belum ada barang di top wishlist.</p>
+                                <div className="col-span-3 text-center py-10 bg-surface rounded-xl border border-dashed border-outline-variant">
+                                    <p className="text-on-surface-variant">Belum ada barang di top wishlist.</p>
                                 </div>
                             )}
                         </div>
@@ -216,22 +216,22 @@ export default async function DashboardPage() {
                     <section>
                         <div className="grid grid-cols-3 gap-2 sm:gap-6">
                             {/* Total Items */}
-                            <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-3 sm:p-6 text-white shadow-lg flex flex-col items-center sm:items-start text-center sm:text-left">
-                                <p className="text-blue-100 text-xs sm:text-sm font-medium uppercase tracking-wider">Barang</p>
+                            <div className="bg-primary-container text-on-primary-container rounded-xl p-3 sm:p-6 shadow-lg flex flex-col items-center sm:items-start text-center sm:text-left">
+                                <p className="text-on-primary-container/80 text-xs sm:text-sm font-medium uppercase tracking-wider">Barang</p>
                                 <p className="text-xl sm:text-4xl font-bold mt-1 sm:mt-2">{totalItems}</p>
                             </div>
 
                             {/* Total Price */}
-                            <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-3 sm:p-6 text-white shadow-lg flex flex-col items-center sm:items-start text-center sm:text-left">
-                                <p className="text-purple-100 text-xs sm:text-sm font-medium uppercase tracking-wider">Total</p>
+                            <div className="bg-secondary-container text-on-secondary-container rounded-xl p-3 sm:p-6 shadow-lg flex flex-col items-center sm:items-start text-center sm:text-left">
+                                <p className="text-on-secondary-container/80 text-xs sm:text-sm font-medium uppercase tracking-wider">Total</p>
                                 <p className="text-lg sm:text-3xl font-bold mt-1 sm:mt-2 truncate w-full" title={formatCurrency(totalPrice)}>
                                     {formatCompactCurrency(totalPrice)}
                                 </p>
                             </div>
 
                             {/* Purchased Stats */}
-                            <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-3 sm:p-6 text-white shadow-lg flex flex-col items-center sm:items-start text-center sm:text-left">
-                                <p className="text-green-100 text-xs sm:text-sm font-medium uppercase tracking-wider">Dibeli</p>
+                            <div className="bg-tertiary-container text-on-tertiary-container rounded-xl p-3 sm:p-6 shadow-lg flex flex-col items-center sm:items-start text-center sm:text-left">
+                                <p className="text-on-tertiary-container/80 text-xs sm:text-sm font-medium uppercase tracking-wider">Dibeli</p>
                                 <p className="text-xl sm:text-4xl font-bold mt-1 sm:mt-2">{purchasedItems}</p>
                             </div>
                         </div>
@@ -239,10 +239,10 @@ export default async function DashboardPage() {
 
                     {/* Section 3: All Items */}
                     <section>
-                        <h2 className="text-2xl font-bold text-gray-800 mb-4">📦 Semua Barang</h2>
+                        <h2 className="text-2xl font-bold text-on-surface mb-4">📦 Semua Barang</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {allItems.map((item) => (
-                                <div key={item.id} className={`bg-white rounded-lg shadow-sm border overflow-hidden hover:shadow-md transition-all duration-200 group ${item.isPurchased ? 'border-green-200 bg-green-50' : 'border-gray-200'}`}>
+                                <div key={item.id} className={`bg-surface rounded-lg shadow-sm border overflow-hidden hover:shadow-md transition-all duration-200 group ${item.isPurchased ? 'border-primary-container bg-primary-container/5' : 'border-outline-variant'}`}>
                                     <div className="relative h-40 w-full bg-gray-100 group-hover:scale-105 transition-transform duration-500">
                                         {item.photoUrl ? (
                                             <Image
@@ -252,7 +252,7 @@ export default async function DashboardPage() {
                                                 className={`object-cover ${item.isPurchased ? 'grayscale' : ''}`}
                                             />
                                         ) : (
-                                            <div className="flex items-center justify-center h-full text-gray-400 text-sm">
+                                            <div className="flex items-center justify-center h-full text-on-surface-variant/50 text-sm">
                                                 No Image
                                             </div>
                                         )}
@@ -270,8 +270,8 @@ export default async function DashboardPage() {
                                         )}
                                     </div>
                                     <div className="p-4">
-                                        <h4 className={`font-semibold truncate ${item.isPurchased ? 'text-gray-500 line-through' : 'text-gray-900'}`} title={item.name}>{item.name}</h4>
-                                        <p className="text-gray-600 text-sm mt-1">{formatCompactCurrency(item.price)}</p>
+                                        <h4 className={`font-semibold truncate ${item.isPurchased ? 'text-on-surface-variant line-through opacity-70' : 'text-on-surface'}`} title={item.name}>{item.name}</h4>
+                                        <p className="text-secondary text-sm mt-1">{formatCompactCurrency(item.price)}</p>
 
                                         <div className="mt-4 space-y-2">
                                             <form action={async () => {
@@ -282,15 +282,15 @@ export default async function DashboardPage() {
                                                     type="submit"
                                                     className={`w-full py-1.5 px-3 rounded-md text-xs font-medium border transition-colors ${item.isPurchased
                                                         ? 'border-green-300 text-green-700 bg-green-100 hover:bg-green-200'
-                                                        : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                                                        : 'border-outline text-on-surface hover:bg-surface-container-high'
                                                         }`}
                                                 >
                                                     {item.isPurchased ? 'Mark Unpurchased' : 'Mark Purchased'}
                                                 </button>
                                             </form>
 
-                                            <div className="flex justify-between items-center pt-2 border-t border-gray-100">
-                                                <Link href={`/dashboard/edit/${item.id}`} className="text-blue-600 hover:text-blue-800 text-xs font-medium">
+                                            <div className="flex justify-between items-center pt-2 border-t border-outline-variant">
+                                                <Link href={`/dashboard/edit/${item.id}`} className="text-primary hover:text-primary/80 text-xs font-medium">
                                                     Edit
                                                 </Link>
                                                 <DeleteButton itemId={item.id} />
@@ -300,7 +300,7 @@ export default async function DashboardPage() {
                                 </div>
                             ))}
                             {allItems.length === 0 && (
-                                <div className="col-span-full py-12 text-center text-gray-500">
+                                <div className="col-span-full py-12 text-center text-on-surface-variant">
                                     Tidak ada barang. Tambahkan barang baru dengan tombol + di bawah.
                                 </div>
                             )}
@@ -313,7 +313,7 @@ export default async function DashboardPage() {
             {/* FAB */}
             <Link
                 href="/dashboard/add"
-                className="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-full shadow-lg flex items-center transition duration-200 z-50 hover:scale-105 active:scale-95"
+                className="fixed bottom-6 right-6 bg-primary hover:bg-primary/90 text-on-primary font-semibold py-3 px-6 rounded-full shadow-lg flex items-center transition duration-200 z-50 hover:scale-105 active:scale-95"
             >
                 <span className="mr-2 text-xl">+</span>
                 <span className="sr-only">Tambah Barang</span>

@@ -26,19 +26,19 @@ export default async function CategoryComparisonPage() {
     })
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-background">
             {/* Simple Top Bar */}
-            <header className="bg-white shadow-sm sticky top-0 z-10">
+            <header className="bg-surface shadow-sm sticky top-0 z-10 border-b border-outline-variant">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16 items-center">
                         <div className="flex items-center">
-                            <Link href="/dashboard" className="text-xl font-bold text-gray-900 tracking-tight hover:text-blue-600 transition">
+                            <Link href="/dashboard" className="text-xl font-bold text-on-surface tracking-tight hover:text-primary transition">
                                 ulala
                             </Link>
-                            <span className="mx-3 text-gray-300">/</span>
-                            <span className="text-gray-500 font-medium">Compare Categories</span>
+                            <span className="mx-3 text-on-surface-variant/30">/</span>
+                            <span className="text-on-surface-variant font-medium">Compare Categories</span>
                         </div>
-                        <Link href="/dashboard" className="text-sm font-medium text-gray-600 hover:text-gray-900">
+                        <Link href="/dashboard" className="text-sm font-medium text-secondary hover:text-on-surface">
                             Back to Dashboard
                         </Link>
                     </div>

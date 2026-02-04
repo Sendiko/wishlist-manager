@@ -19,7 +19,7 @@ export default function DeleteButton({ itemId }: { itemId: string }) {
             <button
                 type="submit"
                 disabled={isDeleting}
-                className="text-red-600 hover:text-red-800 text-xs font-medium border border-red-200 hover:bg-red-50 rounded px-2 py-1 transition-colors"
+                className="text-error hover:text-on-error hover:bg-error/10 text-xs font-medium border border-error/50 rounded px-2 py-1 transition-colors disabled:opacity-50"
             >
                 {isDeleting ? '...' : 'Hapus'}
             </button>
