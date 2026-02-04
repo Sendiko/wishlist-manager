@@ -11,7 +11,7 @@ export default function RegisterPage() {
     return (
         <div className="flex min-h-screen items-center justify-center bg-background">
             <div className="w-full max-w-md bg-surface p-8 rounded-lg shadow-md border border-outline-variant">
-                <h2 className="mb-6 text-center text-2xl font-bold text-on-surface">Create an Account</h2>
+                <h2 className="mb-6 text-center text-2xl font-bold text-on-surface font-display">Create an Account</h2>
                 <form action={action} className="space-y-4">
                     <div>
                         <label htmlFor="username" className="block text-sm font-medium text-on-surface-variant">

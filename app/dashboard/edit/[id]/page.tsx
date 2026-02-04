@@ -23,7 +23,7 @@ export default async function EditPage({ params }: { params: Promise<{ id: strin
     return (
         <div className="min-h-screen bg-background p-6 flex items-center justify-center">
             <div className="bg-surface rounded-lg shadow-md p-8 w-full max-w-2xl border border-outline-variant">
-                <h1 className="text-2xl font-bold mb-6 text-on-surface">Edit Barang</h1>
+                <h1 className="text-2xl font-bold mb-6 text-on-surface font-display">Edit Barang</h1>
                 <EditItemForm item={item} categories={categories} />
             </div>
         </div>

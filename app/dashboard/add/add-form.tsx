@@ -12,6 +12,19 @@ export default function AddItemForm({ categories }: { categories: Category[] }) 
     const [neccessaryRate, setNeccessaryRate] = useState(5)
     const [wishRate, setWishRate] = useState(5)
     const [interestRate, setInterestRate] = useState(5)
+    const [price, setPrice] = useState('')
+    const [displayPrice, setDisplayPrice] = useState('')
+
+    const formatRupiah = (value: string) => {
+        const number = value.replace(/\D/g, '')
+        return number.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    }
+
+    const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const rawValue = e.target.value.replace(/\D/g, '')
+        setPrice(rawValue)
+        setDisplayPrice(formatRupiah(rawValue))
+    }
 
     return (
         <form action={action} className="space-y-6">
@@ -95,14 +108,22 @@ export default function AddItemForm({ categories }: { categories: Category[] }) 
             {/* Price */}
             <div>
                 <label htmlFor="price" className="block text-sm font-medium text-on-surface-variant">Harga (IDR)</label>
-                <input
-                    type="number"
-                    id="price"
-                    name="price"
-                    min="0"
-                    className="mt-1 block w-full rounded-md border border-outline bg-surface text-on-surface px-3 py-2 placeholder-on-surface-variant/50 focus:border-primary focus:ring-primary"
-                    placeholder="15000000"
-                />
+                <div className="relative mt-1">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">Rp</span>
+                    <input
+                        type="text"
+                        id="price-display"
+                        value={displayPrice}
+                        onChange={handlePriceChange}
+                        className="block w-full rounded-md border border-outline bg-surface text-on-surface pl-10 pr-3 py-2 placeholder-on-surface-variant/50 focus:border-primary focus:ring-primary"
+                        placeholder="15.000.000"
+                    />
+                    <input
+                        type="hidden"
+                        name="price"
+                        value={price}
+                    />
+                </div>
                 {state?.errors?.price && <p className="mt-1 text-sm text-error">{state.errors.price}</p>}
             </div>
 

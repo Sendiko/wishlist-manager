@@ -57,7 +57,7 @@ export default function ComparisonClient({ items }: { items: Item[] }) {
         return (
             <div className="space-y-6">
                 <div className="flex justify-between items-center bg-surface p-4 rounded-lg shadow-sm border border-outline-variant">
-                    <h2 className="text-xl font-bold text-on-surface">Hasil Perbandingan</h2>
+                    <h2 className="text-xl font-bold text-on-surface font-display">Hasil Perbandingan</h2>
                     <button
                         onClick={() => setShowComparison(false)}
                         className="text-sm text-secondary hover:text-on-surface underline"
@@ -98,7 +98,7 @@ export default function ComparisonClient({ items }: { items: Item[] }) {
 
                                     <div className="p-6 flex-grow flex flex-col space-y-4">
                                         <div>
-                                            <h3 className="text-lg font-bold text-on-surface line-clamp-2 min-h-[3.5rem]">{item.name}</h3>
+                                            <h3 className="text-lg font-bold text-on-surface line-clamp-2 min-h-[3.5rem] font-display">{item.name}</h3>
                                             <p className="text-xl text-tertiary font-bold mt-1">{formatCurrency(item.price)}</p>
                                         </div>
 
@@ -152,7 +152,7 @@ export default function ComparisonClient({ items }: { items: Item[] }) {
         <div className="space-y-6">
             <div className="bg-surface p-6 rounded-lg shadow-sm border border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-on-surface">Pilih Barang untuk Dibandingkan</h1>
+                    <h1 className="text-2xl font-bold text-on-surface font-display">Pilih Barang untuk Dibandingkan</h1>
                     <p className="text-on-surface-variant">Pilih minimal 2 barang untuk melihat perbandingan skornya.</p>
                 </div>
                 <div className="flex gap-3">

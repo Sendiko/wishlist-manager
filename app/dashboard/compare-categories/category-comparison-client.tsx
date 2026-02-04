@@ -107,7 +107,7 @@ export default function CategoryComparisonClient({ categories }: { categories: C
         return (
             <div className="space-y-6">
                 <div className="flex justify-between items-center bg-surface p-4 rounded-lg shadow-sm border border-outline-variant">
-                    <h2 className="text-xl font-bold text-on-surface">Hasil Perbandingan</h2>
+                    <h2 className="text-xl font-bold text-on-surface font-display">Hasil Perbandingan</h2>
                     <button
                         onClick={() => setShowComparison(false)}
                         className="text-sm text-primary hover:text-primary/80 underline"
@@ -133,7 +133,7 @@ export default function CategoryComparisonClient({ categories }: { categories: C
 
                                     <div className={`p-6 flex-grow flex flex-col space-y-6 ${isWinner ? 'pt-10' : ''}`}>
                                         <div className="text-center">
-                                            <h3 className="text-2xl font-bold text-on-surface">{category.name}</h3>
+                                            <h3 className="text-2xl font-bold text-on-surface font-display">{category.name}</h3>
                                             <p className="text-on-surface-variant text-sm">{category.itemCount} Item Terpilih</p>
                                         </div>
 
@@ -186,7 +186,7 @@ export default function CategoryComparisonClient({ categories }: { categories: C
         <div className="space-y-6">
             <div className="bg-surface p-6 rounded-lg shadow-sm border border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-on-surface">Bandingkan Kategori (Granular)</h1>
+                    <h1 className="text-2xl font-bold text-on-surface font-display">Bandingkan Kategori (Granular)</h1>
                     <p className="text-on-surface-variant">Pilih item spesifik dari tiap kategori untuk melihat kombinasi mana yang paling bernilai.</p>
                 </div>
                 <div className="flex gap-3">

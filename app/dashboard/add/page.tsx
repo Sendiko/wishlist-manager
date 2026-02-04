@@ -14,7 +14,7 @@ export default async function AddItemPage() {
     return (
         <div className="min-h-screen bg-background p-6 flex items-center justify-center">
             <div className="bg-surface rounded-lg shadow-md p-8 w-full max-w-2xl border border-outline-variant">
-                <h1 className="text-2xl font-bold mb-6 text-on-surface">Tambah Barang Baru</h1>
+                <h1 className="text-2xl font-bold mb-6 text-on-surface font-display">Tambah Barang Baru</h1>
                 <AddItemForm categories={categories} />
             </div>
         </div>
