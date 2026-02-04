@@ -207,6 +207,7 @@ export default async function DashboardPage() {
                 items={allItems}
                 categories={categories}
                 formatCompactCurrency={formatCompactCurrency}
+                formatCurrency={formatCurrency}
             />
 
             {/* FAB */}

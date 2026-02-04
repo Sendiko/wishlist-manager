@@ -6,6 +6,7 @@ import { toggleItemPurchased } from '@/app/actions/item'
 import Link from 'next/link'
 import Image from 'next/image'
 import DeleteButton from './delete-button'
+import ItemDetailModal from './item-detail-modal'
 
 type ItemWithCategory = Item & { category: Category | null }
 
@@ -13,15 +14,28 @@ interface ItemsListClientProps {
     items: ItemWithCategory[]
     categories: Category[]
     formatCompactCurrency: (amount: bigint | number) => string
+    formatCurrency: (amount: bigint | number) => string
 }
 
-export default function ItemsListClient({ items, categories, formatCompactCurrency }: ItemsListClientProps) {
+export default function ItemsListClient({ items, categories, formatCompactCurrency, formatCurrency }: ItemsListClientProps) {
     const [selectedCategory, setSelectedCategory] = useState<string>('all')
+    const [selectedItem, setSelectedItem] = useState<ItemWithCategory | null>(null)
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
     // Filter items based on selected category
     const filteredItems = selectedCategory === 'all'
         ? items
         : items.filter(item => item.categoryId === selectedCategory)
+
+    const handleItemClick = (item: ItemWithCategory) => {
+        setSelectedItem(item)
+        setIsModalOpen(true)
+    }
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false)
+        setTimeout(() => setSelectedItem(null), 200) // Clear after animation
+    }
 
     return (
         <section>
@@ -33,8 +47,8 @@ export default function ItemsListClient({ items, categories, formatCompactCurren
                     <button
                         onClick={() => setSelectedCategory('all')}
                         className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${selectedCategory === 'all'
-                                ? 'bg-primary text-on-primary shadow-md'
-                                : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high border border-outline-variant'
+                            ? 'bg-primary text-on-primary shadow-md'
+                            : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high border border-outline-variant'
                             }`}
                     >
                         All Categories
@@ -44,8 +58,8 @@ export default function ItemsListClient({ items, categories, formatCompactCurren
                             key={category.id}
                             onClick={() => setSelectedCategory(category.id)}
                             className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${selectedCategory === category.id
-                                    ? 'bg-primary text-on-primary shadow-md'
-                                    : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high border border-outline-variant'
+                                ? 'bg-primary text-on-primary shadow-md'
+                                : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high border border-outline-variant'
                                 }`}
                         >
                             {category.name}
@@ -56,7 +70,11 @@ export default function ItemsListClient({ items, categories, formatCompactCurren
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {filteredItems.map((item) => (
-                    <div key={item.id} className={`bg-surface rounded-lg shadow-sm border overflow-hidden hover:shadow-md transition-all duration-200 group ${item.isPurchased ? 'border-primary-container bg-primary-container/5' : 'border-outline-variant'}`}>
+                    <div
+                        key={item.id}
+                        onClick={() => handleItemClick(item)}
+                        className={`bg-surface rounded-lg shadow-sm border overflow-hidden hover:shadow-md transition-all duration-200 group cursor-pointer ${item.isPurchased ? 'border-primary-container bg-primary-container/5' : 'border-outline-variant'}`}
+                    >
                         <div className="relative h-40 w-full bg-surface-container-low group-hover:scale-105 transition-transform duration-500">
                             {item.photoUrl ? (
                                 <Image
@@ -122,6 +140,14 @@ export default function ItemsListClient({ items, categories, formatCompactCurren
                     </div>
                 )}
             </div>
+
+            {/* Item Detail Modal */}
+            <ItemDetailModal
+                item={selectedItem}
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                formatCurrency={formatCurrency}
+            />
         </section>
     )
 }
