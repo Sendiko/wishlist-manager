@@ -6,6 +6,7 @@ import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import { writeFile, mkdir } from 'fs/promises'
 import { join } from 'path'
+import { chmod } from 'fs/promises';
 
 const ItemSchema = z.object({
     name: z.string().min(1, { message: 'Nama barang wajib diisi.' }).trim(),
@@ -49,16 +50,20 @@ export async function addItem(prevState: FormState, formData: FormData) {
             const bytes = await photoFile.arrayBuffer()
             const buffer = Buffer.from(bytes)
 
-            // Create uploads directory if it doesn't exist
             const uploadDir = join(process.cwd(), 'public', 'uploads')
             await mkdir(uploadDir, { recursive: true })
 
-            // Create unique filename
             const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
             const filename = uniqueSuffix + '-' + photoFile.name.replace(/[^a-z0-9.]/gi, '_').toLowerCase()
             const filepath = join(uploadDir, filename)
 
+            // 2. Write the file
             await writeFile(filepath, buffer)
+
+            // 3. Set permissions to 644 (Owner: rw, Group: r, Others: r)
+            // This allows the web server/Next.js to read the file
+            await chmod(filepath, 0o644)
+
             uploadedPhotoUrl = `/uploads/${filename}`
         } catch (error) {
             console.error('File upload error:', error)
