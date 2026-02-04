@@ -9,6 +9,11 @@ export default function AddItemForm({ categories }: { categories: Category[] }) 
     // @ts-ignore
     const [state, action, isPending] = useActionState(addItem, {})
 
+    const [name, setName] = useState('')
+    const [categoryId, setCategoryId] = useState('')
+    const [photoUrl, setPhotoUrl] = useState('')
+    const [link, setLink] = useState('')
+    const [reasoning, setReasoning] = useState('')
     const [neccessaryRate, setNeccessaryRate] = useState(5)
     const [wishRate, setWishRate] = useState(5)
     const [interestRate, setInterestRate] = useState(5)
@@ -36,6 +41,8 @@ export default function AddItemForm({ categories }: { categories: Category[] }) 
                     type="text"
                     id="name"
                     name="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     className="mt-1 block w-full rounded-md border border-outline bg-surface text-on-surface px-3 py-2 placeholder-on-surface-variant/50 focus:border-primary focus:ring-primary"
                     placeholder="Contoh: MacBook Air M2"
                 />
@@ -48,8 +55,9 @@ export default function AddItemForm({ categories }: { categories: Category[] }) 
                 <select
                     id="categoryId"
                     name="categoryId"
+                    value={categoryId}
+                    onChange={(e) => setCategoryId(e.target.value)}
                     className="mt-1 block w-full rounded-md border border-outline bg-surface text-on-surface px-3 py-2 focus:border-primary focus:ring-primary"
-                    defaultValue=""
                 >
                     <option value="" disabled>Pilih Kategori (Optional)</option>
                     {categories.map((category) => (
@@ -86,6 +94,8 @@ export default function AddItemForm({ categories }: { categories: Category[] }) 
                     type="url"
                     id="photoUrl"
                     name="photoUrl"
+                    value={photoUrl}
+                    onChange={(e) => setPhotoUrl(e.target.value)}
                     className="mt-1 block w-full rounded-md border border-outline bg-surface text-on-surface px-3 py-2 placeholder-on-surface-variant/50 focus:border-primary focus:ring-primary"
                     placeholder="https://example.com/image.jpg"
                 />
@@ -99,6 +109,8 @@ export default function AddItemForm({ categories }: { categories: Category[] }) 
                     type="url"
                     id="link"
                     name="link"
+                    value={link}
+                    onChange={(e) => setLink(e.target.value)}
                     className="mt-1 block w-full rounded-md border border-outline bg-surface text-on-surface px-3 py-2 placeholder-on-surface-variant/50 focus:border-primary focus:ring-primary"
                     placeholder="https://tokopedia.com/..."
                 />
@@ -133,6 +145,8 @@ export default function AddItemForm({ categories }: { categories: Category[] }) 
                 <textarea
                     id="reasoning"
                     name="reasoning"
+                    value={reasoning}
+                    onChange={(e) => setReasoning(e.target.value)}
                     rows={3}
                     className="mt-1 block w-full rounded-md border border-outline bg-surface text-on-surface px-3 py-2 placeholder-on-surface-variant/50 focus:border-primary focus:ring-primary"
                     placeholder="Kenapa kamu butuh barang ini?"

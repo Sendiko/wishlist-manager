@@ -9,6 +9,11 @@ export default function EditItemForm({ item, categories }: { item: Item, categor
     // @ts-ignore
     const [state, action, isPending] = useActionState(updateItem, {})
 
+    const [name, setName] = useState(item.name)
+    const [categoryId, setCategoryId] = useState(item.categoryId || '')
+    const [photoUrl, setPhotoUrl] = useState(item.photoUrl || '')
+    const [link, setLink] = useState(item.link || '')
+    const [reasoning, setReasoning] = useState(item.reasoning || '')
     const [neccessaryRate, setNeccessaryRate] = useState(item.neccessary_rate)
     const [wishRate, setWishRate] = useState(item.wish_rate)
     const [interestRate, setInterestRate] = useState(item.interest_rate)
@@ -41,7 +46,8 @@ export default function EditItemForm({ item, categories }: { item: Item, categor
                     type="text"
                     id="name"
                     name="name"
-                    defaultValue={item.name}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     className="mt-1 block w-full rounded-md border border-outline bg-surface text-on-surface px-3 py-2 placeholder-on-surface-variant/50 focus:border-primary focus:ring-primary"
                 />
                 {state?.errors?.name && <p className="mt-1 text-sm text-error">{state.errors.name}</p>}
@@ -53,8 +59,9 @@ export default function EditItemForm({ item, categories }: { item: Item, categor
                 <select
                     id="categoryId"
                     name="categoryId"
+                    value={categoryId}
+                    onChange={(e) => setCategoryId(e.target.value)}
                     className="mt-1 block w-full rounded-md border border-outline bg-surface text-on-surface px-3 py-2 focus:border-primary focus:ring-primary"
-                    defaultValue={item.categoryId || ""}
                 >
                     <option value="" disabled>Pilih Kategori (Optional)</option>
                     {categories.map((category) => (
@@ -90,7 +97,8 @@ export default function EditItemForm({ item, categories }: { item: Item, categor
                     type="url"
                     id="photoUrl"
                     name="photoUrl"
-                    defaultValue={item.photoUrl}
+                    value={photoUrl}
+                    onChange={(e) => setPhotoUrl(e.target.value)}
                     className="mt-1 block w-full rounded-md border border-outline bg-surface text-on-surface px-3 py-2 placeholder-on-surface-variant/50 focus:border-primary focus:ring-primary"
                     placeholder="https://example.com/image.jpg"
                 />
@@ -104,7 +112,8 @@ export default function EditItemForm({ item, categories }: { item: Item, categor
                     type="url"
                     id="link"
                     name="link"
-                    defaultValue={item.link}
+                    value={link}
+                    onChange={(e) => setLink(e.target.value)}
                     className="mt-1 block w-full rounded-md border border-outline bg-surface text-on-surface px-3 py-2 placeholder-on-surface-variant/50 focus:border-primary focus:ring-primary"
                 />
                 {state?.errors?.link && <p className="mt-1 text-sm text-error">{state.errors.link}</p>}
@@ -138,8 +147,9 @@ export default function EditItemForm({ item, categories }: { item: Item, categor
                 <textarea
                     id="reasoning"
                     name="reasoning"
+                    value={reasoning}
+                    onChange={(e) => setReasoning(e.target.value)}
                     rows={3}
-                    defaultValue={item.reasoning}
                     className="mt-1 block w-full rounded-md border border-outline bg-surface text-on-surface px-3 py-2 placeholder-on-surface-variant/50 focus:border-primary focus:ring-primary"
                 />
                 {state?.errors?.reasoning && <p className="mt-1 text-sm text-error">{state.errors.reasoning}</p>}
