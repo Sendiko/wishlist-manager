@@ -4,7 +4,6 @@ import { useEffect } from 'react'
 import { Item, Category } from '@prisma/client'
 import Image from 'next/image'
 import Link from 'next/link'
-import { toggleItemPurchased } from '@/app/actions/item'
 import DeleteButton from './delete-button'
 
 type ItemWithCategory = Item & { category: Category | null }
@@ -160,20 +159,6 @@ export default function ItemDetailModal({ item, isOpen, onClose, formatCurrency 
 
                     {/* Actions */}
                     <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-outline-variant">
-                        <form action={async () => {
-                            'use server'
-                            await toggleItemPurchased(item.id, item.isPurchased)
-                        }} className="flex-1">
-                            <button
-                                type="submit"
-                                className={`w-full py-3 px-4 rounded-lg font-medium transition-colors ${item.isPurchased
-                                        ? 'bg-green-100 text-green-700 hover:bg-green-200 border border-green-300'
-                                        : 'bg-primary text-on-primary hover:bg-primary/90'
-                                    }`}
-                            >
-                                {item.isPurchased ? '✓ Sudah Dibeli' : 'Tandai Dibeli'}
-                            </button>
-                        </form>
 
                         <Link
                             href={`/dashboard/edit/${item.id}`}

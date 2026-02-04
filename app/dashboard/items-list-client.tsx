@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { Item, Category } from '@prisma/client'
-import { toggleItemPurchased } from '@/app/actions/item'
 import Link from 'next/link'
 import Image from 'next/image'
 import DeleteButton from './delete-button'
@@ -107,21 +106,6 @@ export default function ItemsListClient({ items, categories, formatCompactCurren
                             <p className="text-secondary text-sm mt-1">{formatCompactCurrency(item.price)}</p>
 
                             <div className="mt-4 space-y-2">
-                                <form action={async () => {
-                                    'use server'
-                                    await toggleItemPurchased(item.id, item.isPurchased)
-                                }}>
-                                    <button
-                                        type="submit"
-                                        className={`w-full py-1.5 px-3 rounded-md text-xs font-medium border transition-colors ${item.isPurchased
-                                            ? 'border-green-300 text-green-700 bg-green-100 hover:bg-green-200'
-                                            : 'border-outline text-on-surface hover:bg-surface-container-high'
-                                            }`}
-                                    >
-                                        {item.isPurchased ? 'Mark Unpurchased' : 'Mark Purchased'}
-                                    </button>
-                                </form>
-
                                 <div className="flex justify-between items-center pt-2 border-t border-outline-variant">
                                     <Link href={`/dashboard/edit/${item.id}`} className="text-primary hover:text-primary/80 text-xs font-medium">
                                         Edit
