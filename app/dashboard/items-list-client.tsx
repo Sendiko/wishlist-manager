@@ -12,14 +12,40 @@ type ItemWithCategory = Item & { category: Category | null }
 interface ItemsListClientProps {
     items: ItemWithCategory[]
     categories: Category[]
-    formatCompactCurrency: (amount: bigint | number) => string
-    formatCurrency: (amount: bigint | number) => string
 }
 
-export default function ItemsListClient({ items, categories, formatCompactCurrency, formatCurrency }: ItemsListClientProps) {
+
+export default function ItemsListClient({ items, categories }: ItemsListClientProps) {
     const [selectedCategory, setSelectedCategory] = useState<string>('all')
     const [selectedItem, setSelectedItem] = useState<ItemWithCategory | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
+
+    // Format currency functions defined in client component
+    const formatCompactCurrency = (amount: bigint | number) => {
+        const num = Number(amount)
+        if (num >= 1000000000) {
+            return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'M'
+        }
+        if (num >= 1000000) {
+            return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'Jt'
+        }
+        if (num >= 1000) {
+            return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'Rb'
+        }
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+        }).format(num)
+    }
+
+    const formatCurrency = (amount: bigint | number) => {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+        }).format(Number(amount))
+    }
 
     // Filter items based on selected category
     const filteredItems = selectedCategory === 'all'

@@ -223,8 +223,6 @@ export default async function DashboardPage() {
             <ItemsListClient
                 items={allItems}
                 categories={categories}
-                formatCompactCurrency={formatCompactCurrency}
-                formatCurrency={formatCurrency}
             />
 
             {/* FAB */}
