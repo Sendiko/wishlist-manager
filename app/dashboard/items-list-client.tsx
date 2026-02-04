@@ -68,7 +68,7 @@ export default function ItemsListClient({ items, categories }: ItemsListClientPr
                 <h2 className="text-2xl font-bold text-on-surface font-display">📦 Semua Barang</h2>
 
                 {/* Category Filter */}
-                <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0">
+                <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-2 sm:pb-0">
                     <button
                         onClick={() => setSelectedCategory('all')}
                         className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${selectedCategory === 'all'
