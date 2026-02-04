@@ -111,6 +111,7 @@ export default async function DashboardPage() {
                                             src={item.photoUrl}
                                             alt={item.name}
                                             fill
+                                            unoptimized={true}
                                             className="object-cover"
                                         />
                                     ) : (
@@ -204,6 +205,7 @@ export default async function DashboardPage() {
                             <div className="relative h-40 w-full bg-surface-container-low group-hover:scale-105 transition-transform duration-500">
                                 {item.photoUrl ? (
                                     <Image
+                                        unoptimized={true}
                                         src={item.photoUrl}
                                         alt={item.name}
                                         fill

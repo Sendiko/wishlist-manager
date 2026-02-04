@@ -84,6 +84,7 @@ export default function ComparisonClient({ items }: { items: Item[] }) {
                                     <div className="relative h-48 w-full bg-surface-container-low mt-6"> {/* Added margin top for banner */}
                                         {item.photoUrl ? (
                                             <Image
+                                                unoptimized={true}
                                                 src={item.photoUrl}
                                                 alt={item.name}
                                                 fill
@@ -193,6 +194,7 @@ export default function ComparisonClient({ items }: { items: Item[] }) {
                             <div className="relative h-32 w-full bg-surface-container-low">
                                 {item.photoUrl ? (
                                     <Image
+                                        unoptimized={true}
                                         src={item.photoUrl}
                                         alt={item.name}
                                         fill
