@@ -59,8 +59,7 @@ export async function addItem(prevState: FormState, formData: FormData) {
             const filepath = join(uploadDir, filename)
 
             await writeFile(filepath, buffer)
-            const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
-            uploadedPhotoUrl = `${baseUrl}/uploads/${filename}`
+            uploadedPhotoUrl = `/uploads/${filename}`
         } catch (error) {
             console.error('File upload error:', error)
             return { message: 'Gagal mengupload foto.' }
@@ -192,8 +191,7 @@ export async function updateItem(prevState: FormState, formData: FormData) {
             const filepath = join(uploadDir, filename)
 
             await writeFile(filepath, buffer)
-            const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
-            uploadedPhotoUrl = `${baseUrl}/uploads/${filename}`
+            uploadedPhotoUrl = `/uploads/${filename}`
         } catch (error) {
             console.error('File upload error:', error)
             return { message: 'Gagal mengupload foto.' }
