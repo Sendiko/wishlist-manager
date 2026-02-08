@@ -35,7 +35,8 @@ export default async function DashboardPage() {
         },
     });
 
-    const topItems = await prisma.item.findMany({
+    // Fetch all unpurchased items to calculate total scores
+    const allUnpurchasedItems = await prisma.item.findMany({
         where: {
             userId: session.userId,
             isPurchased: false // Only show unpurchased in most wanted
@@ -43,12 +44,16 @@ export default async function DashboardPage() {
         include: {
             category: true
         },
-        orderBy: [
-            { wish_rate: 'desc' },
-            { neccessary_rate: 'desc' },
-        ],
-        take: 3,
     })
+
+    // Calculate total score for each item and sort by it
+    const topItems = allUnpurchasedItems
+        .map(item => ({
+            ...item,
+            totalScore: item.wish_rate + item.neccessary_rate + item.interest_rate
+        }))
+        .sort((a, b) => b.totalScore - a.totalScore)
+        .slice(0, 3)
 
     // Show all items, sorted by purchased status (unpurchased first) then date
     const allItems = await prisma.item.findMany({
