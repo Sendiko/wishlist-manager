@@ -55,17 +55,28 @@ export default async function DashboardPage() {
         .sort((a, b) => b.totalScore - a.totalScore)
         .slice(0, 3)
 
-    // Show all items, sorted by purchased status (unpurchased first) then date
-    const allItems = await prisma.item.findMany({
+    // Show all items, sorted by purchased status (unpurchased first) then by total score
+    const allItemsRaw = await prisma.item.findMany({
         where: { userId: session.userId },
         include: {
             category: true
         },
-        orderBy: [
-            { isPurchased: 'asc' },
-            { createdAt: 'desc' }
-        ],
     })
+
+    // Calculate total score and sort: unpurchased first, then by total score descending
+    const allItems = allItemsRaw
+        .map(item => ({
+            ...item,
+            totalScore: item.wish_rate + item.neccessary_rate + item.interest_rate
+        }))
+        .sort((a, b) => {
+            // First sort by purchased status (unpurchased first)
+            if (a.isPurchased !== b.isPurchased) {
+                return a.isPurchased ? 1 : -1
+            }
+            // Then sort by total score descending
+            return b.totalScore - a.totalScore
+        })
 
     // Fetch all categories for filtering
     const categories = await prisma.category.findMany({
