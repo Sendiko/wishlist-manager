@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import DeleteButton from './delete-button'
 import ItemDetailModal from './item-detail-modal'
+import PurchaseToggleButton from './purchase-toggle-button'
 
 type ItemWithCategory = Item & { category: Category | null }
 
@@ -132,11 +133,22 @@ export default function ItemsListClient({ items, categories }: ItemsListClientPr
                             <p className="text-secondary text-sm mt-1">{formatCompactCurrency(item.price)}</p>
 
                             <div className="mt-4 space-y-2">
+                                {/* Purchase Toggle Button */}
+                                <div onClick={(e) => e.stopPropagation()}>
+                                    <PurchaseToggleButton itemId={item.id} isPurchased={item.isPurchased} />
+                                </div>
+
                                 <div className="flex justify-between items-center pt-2 border-t border-outline-variant">
-                                    <Link href={`/dashboard/edit/${item.id}`} className="text-primary hover:text-primary/80 text-xs font-medium">
+                                    <Link
+                                        href={`/dashboard/edit/${item.id}`}
+                                        className="text-primary hover:text-primary/80 text-xs font-medium"
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
                                         Edit
                                     </Link>
-                                    <DeleteButton itemId={item.id} />
+                                    <div onClick={(e) => e.stopPropagation()}>
+                                        <DeleteButton itemId={item.id} />
+                                    </div>
                                 </div>
                             </div>
                         </div>
