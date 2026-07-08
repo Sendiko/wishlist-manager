@@ -12,6 +12,7 @@ This API enables mobile applications to interact with the Wishlist Manager datab
   - [Get Current User (`GET /api/auth/me`)](#get-current-user-get-apiauthme)
 - [Categories Endpoints](#categories-endpoints)
   - [List Categories (`GET /api/categories`)](#list-categories-get-apicategories)
+  - [Compare Categories (`GET /api/categories/compare`)](#compare-categories-get-apicategoriescompare)
 - [Items Endpoints](#items-endpoints)
   - [List Items (`GET /api/items`)](#list-items-get-apiitems)
   - [Create Item (`POST /api/items`)](#create-item-post-apiitems)
@@ -19,6 +20,7 @@ This API enables mobile applications to interact with the Wishlist Manager datab
   - [Update Item (`PUT /api/items/:id`)](#update-item-put-apiitemsid)
   - [Delete Item (`DELETE /api/items/:id`)](#delete-item-delete-apiitemsid)
   - [Toggle Purchase Status (`PATCH /api/items/:id/toggle-purchase`)](#toggle-purchase-status-patch-apiitemsidtoggle-purchase)
+  - [Compare Items (`GET /api/items/compare`)](#compare-items-get-apiitemscompare)
 
 ---
 
@@ -334,5 +336,168 @@ Toggle the `isPurchased` boolean field (switches `true` $\leftrightarrow$ `false
       "isPurchased": true,
       ...
     }
+  }
+  ```
+
+---
+
+### Compare Items
+Compare multiple selected items by their IDs. The system evaluates ratings and identifies the recommended option.
+
+- **URL:** `/api/items/compare`
+- **Method:** `GET`
+- **Headers:** `Authorization: Bearer <token>`
+- **Query Parameters:**
+  - `ids` (Required): Comma-separated list of item IDs. E.g. `/api/items/compare?ids=item-123,item-456`
+- **Response (200 OK):**
+  ```json
+  {
+    "items": [
+      {
+        "id": "item-123",
+        "name": "Mechanical Keyboard",
+        "photoUrl": "http://localhost:3000/uploads/keyboard.jpg",
+        "link": "https://example.com/buy",
+        "price": "1500000",
+        "priceNumber": 1500000,
+        "reasoning": "Need it for typing comfort.",
+        "neccessary_rate": 8,
+        "wish_rate": 9,
+        "interest_rate": 7,
+        "isPurchased": false,
+        "createdAt": "2026-02-04T12:00:00.000Z",
+        "updatedAt": "2026-02-04T12:00:00.000Z",
+        "userId": "cuid-123",
+        "categoryId": "cat-2",
+        "totalScore": 24,
+        "isWinner": true
+      },
+      {
+        "id": "item-456",
+        "name": "Alternative Keyboard",
+        "photoUrl": "",
+        "link": "",
+        "price": "1200000",
+        "priceNumber": 1200000,
+        "reasoning": "Slightly cheaper fallback.",
+        "neccessary_rate": 6,
+        "wish_rate": 7,
+        "interest_rate": 7,
+        "isPurchased": false,
+        "createdAt": "2026-02-04T12:01:00.000Z",
+        "updatedAt": "2026-02-04T12:01:00.000Z",
+        "userId": "cuid-123",
+        "categoryId": "cat-2",
+        "totalScore": 20,
+        "isWinner": false
+      }
+    ],
+    "winners": [
+      {
+        "id": "item-123",
+        "name": "Mechanical Keyboard",
+        "photoUrl": "http://localhost:3000/uploads/keyboard.jpg",
+        "link": "https://example.com/buy",
+        "price": "1500000",
+        "priceNumber": 1500000,
+        "reasoning": "Need it for typing comfort.",
+        "neccessary_rate": 8,
+        "wish_rate": 9,
+        "interest_rate": 7,
+        "isPurchased": false,
+        "createdAt": "2026-02-04T12:00:00.000Z",
+        "updatedAt": "2026-02-04T12:00:00.000Z",
+        "userId": "cuid-123",
+        "categoryId": "cat-2",
+        "totalScore": 24,
+        "isWinner": true
+      }
+    ]
+  }
+  ```
+- **Response (400 Bad Request):**
+  ```json
+  {
+    "message": "Select at least 2 items to compare."
+  }
+  ```
+
+---
+
+### Compare Categories
+Compare categories by grouping a selection of items and calculating scores, total pricing, and counts.
+
+- **URL:** `/api/categories/compare`
+- **Method:** `GET`
+- **Headers:** `Authorization: Bearer <token>`
+- **Query Parameters:**
+  - `ids` (Required): Comma-separated list of item IDs. E.g. `/api/categories/compare?ids=item-123,item-456`
+- **Response (200 OK):**
+  ```json
+  {
+    "categories": [
+      {
+        "id": "cat-2",
+        "name": "Electronics",
+        "items": [
+          {
+            "id": "item-123",
+            "name": "Mechanical Keyboard",
+            "photoUrl": "http://localhost:3000/uploads/keyboard.jpg",
+            "link": "https://example.com/buy",
+            "price": "1500000",
+            "priceNumber": 1500000,
+            "reasoning": "Need it for typing comfort.",
+            "neccessary_rate": 8,
+            "wish_rate": 9,
+            "interest_rate": 7,
+            "isPurchased": false,
+            "createdAt": "2026-02-04T12:00:00.000Z",
+            "updatedAt": "2026-02-04T12:00:00.000Z",
+            "userId": "cuid-123",
+            "categoryId": "cat-2",
+            "totalScore": 24
+          }
+        ],
+        "itemCount": 1,
+        "totalPrice": "1500000",
+        "totalPriceNumber": 1500000,
+        "totalScore": 24,
+        "avgScore": "24.0",
+        "isWinner": true
+      }
+    ],
+    "winners": [
+      {
+        "id": "cat-2",
+        "name": "Electronics",
+        "items": [
+          {
+            "id": "item-123",
+            "name": "Mechanical Keyboard",
+            "photoUrl": "http://localhost:3000/uploads/keyboard.jpg",
+            "link": "https://example.com/buy",
+            "price": "1500000",
+            "priceNumber": 1500000,
+            "reasoning": "Need it for typing comfort.",
+            "neccessary_rate": 8,
+            "wish_rate": 9,
+            "interest_rate": 7,
+            "isPurchased": false,
+            "createdAt": "2026-02-04T12:00:00.000Z",
+            "updatedAt": "2026-02-04T12:00:00.000Z",
+            "userId": "cuid-123",
+            "categoryId": "cat-2",
+            "totalScore": 24
+          }
+        ],
+        "itemCount": 1,
+        "totalPrice": "1500000",
+        "totalPriceNumber": 1500000,
+        "totalScore": 24,
+        "avgScore": "24.0",
+        "isWinner": true
+      }
+    ]
   }
   ```
