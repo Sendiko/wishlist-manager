@@ -26,10 +26,10 @@ This API enables mobile applications to interact with the Wishlist Manager datab
 
 ## Authentication Flow
 
-Auth uses **JWT Tokens** signed by the server. 
-- Mobile apps should include the token in the headers for all protected endpoints:
-  `Authorization: Bearer <your_jwt_token>`
-- Web clients can rely on the HTTP-only `session` cookie set automatically on Register / Login.
+Auth strictly uses **JWT Tokens** signed by the server. All protected API endpoints require the token to be included in the headers:
+`Authorization: Bearer <your_jwt_token>`
+
+Note: Unlike the web server actions, these API routes do not support cookie-based authentication fallbacks to ensure client-independent security.
 
 ---
 

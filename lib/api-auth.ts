@@ -9,17 +9,7 @@ export async function authenticateRequest(req: Request) {
         token = authHeader.substring(7)
     }
 
-    // 2. Try to get token from Cookie
-    if (!token) {
-        const cookieHeader = req.headers.get('cookie')
-        if (cookieHeader) {
-            const cookies = cookieHeader.split(';').map(c => c.trim())
-            const sessionCookie = cookies.find(c => c.startsWith('session='))
-            if (sessionCookie) {
-                token = sessionCookie.split('=')[1]
-            }
-        }
-    }
+
 
     if (!token) {
         return null
