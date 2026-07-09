@@ -16,7 +16,9 @@ export async function POST(req: Request) {
         const validation = SignupSchema.safeParse(body)
 
         if (!validation.success) {
-            return createErrorResponse(400, 'Validation failed.', validation.error.flatten().fieldErrors)
+            const fieldErrors = validation.error.flatten().fieldErrors
+            const errorMessage = fieldErrors.username?.[0] || fieldErrors.password?.[0] || 'Validation failed.'
+            return createErrorResponse(400, errorMessage, JSON.stringify(fieldErrors))
         }
 
         const { username, password } = validation.data
