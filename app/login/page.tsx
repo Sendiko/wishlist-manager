@@ -3,6 +3,8 @@
 import { useActionState } from 'react'
 import { login } from '@/app/actions/auth'
 import Link from 'next/link'
+import Image from 'next/image'
+import logoImg from '@/app/ulala_logo.png'
 
 export default function LoginPage() {
     // @ts-ignore
@@ -11,6 +13,14 @@ export default function LoginPage() {
     return (
         <div className="flex min-h-screen items-center justify-center bg-background">
             <div className="w-full max-w-md bg-surface p-8 rounded-lg shadow-md border border-outline-variant">
+                <div className="flex justify-center mb-6">
+                    <Image
+                        src={logoImg}
+                        alt="Ulala Logo"
+                        className="h-12 w-auto object-contain"
+                        priority
+                    />
+                </div>
                 <h2 className="mb-6 text-center text-2xl font-bold text-on-surface font-display">Sign in to your account</h2>
                 <form action={action} className="space-y-4">
                     <div>

@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { logout } from '@/app/actions/auth'
 import { useState } from 'react'
+import Image from 'next/image'
+import logoImg from '@/app/ulala_logo.png'
 
 export default function Sidebar() {
     const pathname = usePathname()
@@ -19,8 +21,13 @@ export default function Sidebar() {
         <>
             {/* Mobile Header */}
             <div className="lg:hidden flex items-center justify-between p-4 bg-surface shadow-sm sticky top-0 z-30 border-b border-outline-variant">
-                <Link href="/dashboard" className="text-xl font-bold text-on-surface tracking-tight font-display">
-                    ulala
+                <Link href="/dashboard" className="flex items-center">
+                    <Image
+                        src={logoImg}
+                        alt="Ulala Logo"
+                        className="h-8 w-auto object-contain"
+                        priority
+                    />
                 </Link>
                 <button
                     onClick={toggleMobileMenu}
@@ -56,8 +63,13 @@ export default function Sidebar() {
                 <div className="flex flex-col h-full">
                     {/* Brand */}
                     <div className="h-16 flex items-center px-6 border-b border-outline-variant">
-                        <Link href="/dashboard" className="text-2xl font-bold text-primary tracking-tight font-display">
-                            ulala
+                        <Link href="/dashboard" className="flex items-center">
+                            <Image
+                                src={logoImg}
+                                alt="Ulala Logo"
+                                className="h-10 w-auto object-contain"
+                                priority
+                            />
                         </Link>
                     </div>
 
