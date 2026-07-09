@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { createErrorResponse } from '@/lib/api-response'
 
 export async function POST() {
     try {
@@ -18,9 +19,6 @@ export async function POST() {
         return response
     } catch (error: any) {
         console.error('Logout API error:', error)
-        return NextResponse.json({
-            message: 'An error occurred during logout.',
-            error: error.message,
-        }, { status: 500 })
+        return createErrorResponse(500, 'An error occurred during logout.', error.message)
     }
 }

@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
 import { encrypt } from '@/lib/session'
+import { createErrorResponse } from '@/lib/api-response'
 
 const LoginSchema = z.object({
     username: z.string().trim(),
@@ -15,10 +16,7 @@ export async function POST(req: Request) {
         const validation = LoginSchema.safeParse(body)
 
         if (!validation.success) {
-            return NextResponse.json({
-                message: 'Validation failed.',
-                errors: validation.error.flatten().fieldErrors,
-            }, { status: 400 })
+            return createErrorResponse(400, 'Validation failed.', validation.error.flatten().fieldErrors)
         }
 
         const { username, password } = validation.data
@@ -28,17 +26,13 @@ export async function POST(req: Request) {
         })
 
         if (!user) {
-            return NextResponse.json({
-                message: 'Invalid username or password.',
-            }, { status: 401 })
+            return createErrorResponse(401, 'Invalid username or password.', 'Invalid credentials')
         }
 
         const passwordsMatch = await bcrypt.compare(password, user.password)
 
         if (!passwordsMatch) {
-            return NextResponse.json({
-                message: 'Invalid username or password.',
-            }, { status: 401 })
+            return createErrorResponse(401, 'Invalid username or password.', 'Invalid credentials')
         }
 
         // Create session
@@ -66,9 +60,6 @@ export async function POST(req: Request) {
         return response
     } catch (error: any) {
         console.error('Login API error:', error)
-        return NextResponse.json({
-            message: 'An error occurred during login.',
-            error: error.message,
-        }, { status: 500 })
+        return createErrorResponse(500, 'An error occurred during login.', error.message)
     }
 }

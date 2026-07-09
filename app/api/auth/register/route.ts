@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
 import { encrypt } from '@/lib/session'
+import { createErrorResponse } from '@/lib/api-response'
 
 const SignupSchema = z.object({
     username: z.string().min(3, { message: 'Username must be at least 3 characters long.' }).trim(),
@@ -15,10 +16,7 @@ export async function POST(req: Request) {
         const validation = SignupSchema.safeParse(body)
 
         if (!validation.success) {
-            return NextResponse.json({
-                message: 'Validation failed.',
-                errors: validation.error.flatten().fieldErrors,
-            }, { status: 400 })
+            return createErrorResponse(400, 'Validation failed.', validation.error.flatten().fieldErrors)
         }
 
         const { username, password } = validation.data
@@ -29,12 +27,7 @@ export async function POST(req: Request) {
         })
 
         if (existingUser) {
-            return NextResponse.json({
-                message: 'Username is already taken.',
-                errors: {
-                    username: ['Username is already taken.'],
-                },
-            }, { status: 400 })
+            return createErrorResponse(400, 'Username is already taken.', { username: ['Username is already taken.'] })
         }
 
         // Hash password
@@ -73,9 +66,6 @@ export async function POST(req: Request) {
         return response
     } catch (error: any) {
         console.error('Registration API error:', error)
-        return NextResponse.json({
-            message: 'An error occurred during registration.',
-            error: error.message,
-        }, { status: 500 })
+        return createErrorResponse(500, 'An error occurred during registration.', error.message)
     }
 }

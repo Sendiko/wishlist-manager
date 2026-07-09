@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { authenticateRequest } from '@/lib/api-auth'
 import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
+import { createErrorResponse } from '@/lib/api-response'
 import { writeFile, mkdir } from 'fs/promises'
 import { join } from 'path'
 import { chmod } from 'fs/promises'
@@ -45,7 +46,7 @@ export async function GET(req: Request) {
     try {
         const session = await authenticateRequest(req)
         if (!session) {
-            return NextResponse.json({ message: 'Unauthorized.' }, { status: 401 })
+            return createErrorResponse(401, 'Unauthorized.', 'Unauthorized')
         }
 
         const { searchParams } = new URL(req.url)
@@ -77,10 +78,7 @@ export async function GET(req: Request) {
         return NextResponse.json({ items }, { status: 200 })
     } catch (error: any) {
         console.error('List Items API error:', error)
-        return NextResponse.json({
-            message: 'An error occurred fetching items.',
-            error: error.message,
-        }, { status: 500 })
+        return createErrorResponse(500, 'An error occurred fetching items.', error.message)
     }
 }
 
@@ -88,7 +86,7 @@ export async function POST(req: Request) {
     try {
         const session = await authenticateRequest(req)
         if (!session) {
-            return NextResponse.json({ message: 'Unauthorized.' }, { status: 401 })
+            return createErrorResponse(401, 'Unauthorized.', 'Unauthorized')
         }
 
         const contentType = req.headers.get('content-type') || ''
@@ -118,7 +116,7 @@ export async function POST(req: Request) {
                     uploadedPhotoUrl = `/uploads/${filename}`
                 } catch (err) {
                     console.error('File upload error:', err)
-                    return NextResponse.json({ message: 'Failed to upload photo.' }, { status: 500 })
+                    return createErrorResponse(500, 'Failed to upload photo.', 'File upload error')
                 }
             }
 
@@ -143,10 +141,7 @@ export async function POST(req: Request) {
 
         const validation = ItemSchema.safeParse(rawData)
         if (!validation.success) {
-            return NextResponse.json({
-                message: 'Validation failed.',
-                errors: validation.error.flatten().fieldErrors,
-            }, { status: 400 })
+            return createErrorResponse(400, 'Validation failed.', validation.error.flatten().fieldErrors)
         }
 
         const { name, photoUrl, link, price, reasoning, neccessary_rate, wish_rate, interest_rate, categoryId } = validation.data
@@ -157,7 +152,7 @@ export async function POST(req: Request) {
                 where: { id: categoryId },
             })
             if (!categoryExists) {
-                return NextResponse.json({ message: 'Category not found.' }, { status: 400 })
+                return createErrorResponse(400, 'Category not found.', 'Category not found')
             }
         }
 
@@ -186,9 +181,6 @@ export async function POST(req: Request) {
         }, { status: 201 })
     } catch (error: any) {
         console.error('Create Item API error:', error)
-        return NextResponse.json({
-            message: 'An error occurred creating item.',
-            error: error.message,
-        }, { status: 500 })
+        return createErrorResponse(500, 'An error occurred creating item.', error.message)
     }
 }

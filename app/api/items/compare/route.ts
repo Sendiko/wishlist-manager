@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { authenticateRequest } from '@/lib/api-auth'
 import { prisma } from '@/lib/prisma'
+import { createErrorResponse } from '@/lib/api-response'
 
 // Helper to map BigInt price and absolute image URLs
 function mapItem(item: any, baseUrl: string) {
@@ -29,14 +30,14 @@ export async function GET(req: Request) {
     try {
         const session = await authenticateRequest(req)
         if (!session) {
-            return NextResponse.json({ message: 'Unauthorized.' }, { status: 401 })
+            return createErrorResponse(401, 'Unauthorized.', 'Unauthorized')
         }
 
         const { searchParams } = new URL(req.url)
         const idsString = searchParams.get('ids')
 
         if (!idsString) {
-            return NextResponse.json({ message: 'Missing ids parameter.' }, { status: 400 })
+            return createErrorResponse(400, 'Missing ids parameter.', 'Missing ids parameter')
         }
 
         const idsArray = idsString
@@ -45,7 +46,7 @@ export async function GET(req: Request) {
             .filter(id => id.length > 0)
 
         if (idsArray.length < 2) {
-            return NextResponse.json({ message: 'Select at least 2 items to compare.' }, { status: 400 })
+            return createErrorResponse(400, 'Select at least 2 items to compare.', 'Select at least 2 items to compare.')
         }
 
         const itemsRaw = await prisma.item.findMany({
@@ -81,9 +82,6 @@ export async function GET(req: Request) {
         }, { status: 200 })
     } catch (error: any) {
         console.error('Item Comparison API error:', error)
-        return NextResponse.json({
-            message: 'An error occurred comparing items.',
-            error: error.message,
-        }, { status: 500 })
+        return createErrorResponse(500, 'An error occurred comparing items.', error.message)
     }
 }

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { authenticateRequest } from '@/lib/api-auth'
 import { prisma } from '@/lib/prisma'
+import { createErrorResponse } from '@/lib/api-response'
 
 // Helper to map BigInt price and absolute image URLs
 function mapItem(item: any, baseUrl: string) {
@@ -32,7 +33,7 @@ export async function PATCH(
     try {
         const session = await authenticateRequest(req)
         if (!session) {
-            return NextResponse.json({ message: 'Unauthorized.' }, { status: 401 })
+            return createErrorResponse(401, 'Unauthorized.', 'Unauthorized')
         }
 
         const { id } = await params
@@ -43,7 +44,7 @@ export async function PATCH(
         })
 
         if (!item || item.userId !== session.userId) {
-            return NextResponse.json({ message: 'Item not found or access denied.' }, { status: 404 })
+            return createErrorResponse(404, 'Item not found or access denied.', 'Item not found or access denied')
         }
 
         const updatedItem = await prisma.item.update({
@@ -63,10 +64,7 @@ export async function PATCH(
         }, { status: 200 })
     } catch (error: any) {
         console.error('Toggle purchase API error:', error)
-        return NextResponse.json({
-            message: 'An error occurred toggling purchase status.',
-            error: error.message,
-        }, { status: 500 })
+        return createErrorResponse(500, 'An error occurred toggling purchase status.', error.message)
     }
 }
 
